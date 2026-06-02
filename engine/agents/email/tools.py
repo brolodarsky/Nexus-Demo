@@ -10,6 +10,7 @@ import sys
 from typing import Optional
 from html.parser import HTMLParser
 from langchain_core.tools import tool
+import json
 
 # Add engine root to sys.path for internal imports
 ENGINE_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -21,6 +22,13 @@ from core.google_auth import get_google_credentials
 # Full IMAP permissions scope for Google Accounts
 SCOPES = ['https://mail.google.com/']
 SECRETS_DIR = os.path.join(ENGINE_ROOT, "..", "tools", ".secrets")
+
+def _get_mock_emails():
+    mock_file = os.path.join(ENGINE_ROOT, "..", "mock_vault", "mock_emails.json")
+    if os.path.exists(mock_file):
+        with open(mock_file, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return []
 
 # ── HTML → plain text stripper ────────────────────────────────────────────────
 class _HTMLStripper(HTMLParser):
@@ -109,6 +117,12 @@ def _extract_body(msg: email_lib.message.Message) -> str:
 @tool
 def fetch_email_by_uid(uid: str) -> Optional[str]:
     """Fetch a single email by IMAP UID and return it as a markdown string."""
+    if os.environ.get("USE_MOCK_EMAILS", "false").lower() == "true":
+        for e in _get_mock_emails():
+            if e["uid"] == uid:
+                return f"# {e['subject']}\n\n**From:** {e['sender']} \n**Date:** {e['date']} \n**UID:** {e['uid']}\n\n---\n\n{e['body']}"
+        return None
+
     try:
         mail = _connect()
         status, data = mail.uid("fetch", uid, "(RFC822)")
@@ -138,6 +152,19 @@ def fetch_email_by_uid(uid: str) -> Optional[str]:
 @tool
 def list_recent_emails(count: int = 5) -> list[dict]:
     """List the most recent `count` emails. Returns metadata, no body."""
+    if os.environ.get("USE_MOCK_EMAILS", "false").lower() == "true":
+        emails = _get_mock_emails()
+        recent = emails[-count:][::-1]
+        results = []
+        for e in recent:
+            results.append({
+                "uid": e["uid"],
+                "subject": e["subject"],
+                "sender": e["sender"],
+                "date": e["date"],
+            })
+        return results
+
     try:
         mail = _connect()
         status, data = mail.uid("search", None, "ALL")
@@ -167,6 +194,30 @@ def list_recent_emails(count: int = 5) -> list[dict]:
 @tool
 def search_emails(query: str, count: int = 5) -> list[dict]:
     """Search the mailbox using IMAP search syntax (e.g. SUBJECT "offer" or FROM "google"). Returns metadata of matching emails."""
+    if isinstance(query, list):
+        query = " ".join(str(q) for q in query)
+    if not isinstance(query, str):
+        query = str(query)
+
+    if os.environ.get("USE_MOCK_EMAILS", "false").lower() == "true":
+        query_lower = query.lower().replace("from", "").replace("subject", "").replace('"', '').strip()
+        emails = _get_mock_emails()
+        matched = []
+        for e in emails:
+            if query_lower in e["sender"].lower() or query_lower in e["subject"].lower() or query_lower in e["body"].lower():
+                matched.append(e)
+        
+        recent = matched[-count:][::-1]
+        results = []
+        for e in recent:
+            results.append({
+                "uid": e["uid"],
+                "subject": e["subject"],
+                "sender": e["sender"],
+                "date": e["date"],
+            })
+        return results
+
     try:
         mail = _connect()
         status, data = mail.uid("search", None, query)

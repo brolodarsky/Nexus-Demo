@@ -23,7 +23,7 @@ Your job is to classify incoming content and decide which domain agent should ha
 
 1. If the user's request requires fetching email data, use the `fetch_emails` tool.
 2. Read the content (either provided by the user directly, or returned by your tool).
-3. You MUST classify it into exactly ONE domain: `career`, `health`, or `general`. DO NOT invent new domains.
+3. You MUST classify it into exactly ONE domain: `career`, `health`, or `general`. DO NOT invent new domains (e.g., NEVER use "email" or "email_assistance" as a domain).
 4. Extract a short summary of what the content is about.
 5. Return your classification as a structured JSON object. Nothing else.
 

@@ -104,9 +104,9 @@ class AgentTracer:
         self._print("ℹ️", message)
 
 
-def _truncate(text: str, max_len: int) -> str:
+def _truncate(text, max_len: int) -> str:
     """Truncate text and append a marker if it was shortened."""
-    text = text.replace("\n", " ").strip()
+    text = str(text).replace("\n", " ").strip()
     if len(text) <= max_len:
         return text
     return text[:max_len] + " [...]"

@@ -6,6 +6,8 @@ This repository contains a demonstration of the Nexus Agentic Engine, fulfilling
 ## The Mock Vault
 This repository includes a `mock_vault` directory. This is a realistic, but entirely sanitized, mock environment of my real Personal Knowledge Management (PKM) system. It is used to demonstrate the agentic engine's ability to navigate and reason over complex, interconnected personal data structures without exposing any real sensitive information (PII, financial data, or intimate journals). You can use this vault to safely test the engine's retrieval and reasoning capabilities.
 
+**Mock Emails:** To make testing the `EmailAgent` seamless without requiring Google OAuth configuration, a `mock_emails.json` file is also included in the `mock_vault`. Setting `USE_MOCK_EMAILS="true"` in your `.env` will bypass IMAP connections and use this local dummy data.
+
 ## Setup Instructions
 
 1. **Clone the repository**
@@ -27,6 +29,7 @@ This repository includes a `mock_vault` directory. This is a realistic, but enti
    # Optional (Defaults provided)
    ALLOWED_USER_IDS=                           # Restrict Telegram bot access (comma separated)
    VAULT_PATH=mock_vault                       # Path to your personal data vault
+   USE_MOCK_EMAILS="true"                      # Bypass Google OAuth and use local mock emails
    IMAP_SERVER=imap.gmail.com                  # IMAP server address
    IMAP_PORT=993                               # IMAP server port
    IMAP_FOLDER=Jobs                            # Email folder to monitor

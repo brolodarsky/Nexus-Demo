@@ -102,6 +102,14 @@ def classify_content(state: RouterState) -> dict:
             summary = classification.get("summary", "")
             confidence = classification.get("confidence", 0.0)
             reasoning = classification.get("reasoning", "")
+            
+            # Clamp invalid domains
+            if domain not in ["career", "health", "general"]:
+                if "career" in reasoning.lower() or "project" in reasoning.lower() or "work" in reasoning.lower() or "draft a reply" in (state.get("raw_content", "") or "").lower():
+                    domain = "career"
+                else:
+                    domain = "general"
+                    
             router_tracer.route(domain, confidence)
             if reasoning:
                 router_tracer.info(f"Reasoning: {reasoning[:120]}")

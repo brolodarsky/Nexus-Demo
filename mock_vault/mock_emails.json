@@ -1,0 +1,30 @@
+[
+  {
+    "uid": "1001",
+    "subject": "Update on your interview - Round 1 passed!",
+    "sender": "Bobby Trickett <bobby.trickett@example.com>",
+    "date": "Mon, 01 Jun 2026 09:15:00 -0400",
+    "body": "Hi William,\n\nI'm pleased to inform you that you passed Round 1 of the interview process! Your systems design approach was exactly what we were looking for.\n\nFor the next step, we need you to submit the take-home project (the Nexus Agentic Engine Demo) by end of day Friday. Please make sure the code is well documented and the agent routing is working correctly.\n\nLet me know if you have any questions.\n\nBest,\nBobby"
+  },
+  {
+    "uid": "1002",
+    "subject": "GitHub: Nexus-Demo repo created",
+    "sender": "GitHub <noreply@github.com>",
+    "date": "Sun, 31 May 2026 14:20:00 -0400",
+    "body": "You have successfully created the repository Nexus-Demo."
+  },
+  {
+    "uid": "1003",
+    "subject": "Inquiry: Staff AI Engineer at Acme Corp",
+    "sender": "Sarah Jenkins <sarah@acmecorp.com>",
+    "date": "Tue, 02 Jun 2026 11:30:00 -0400",
+    "body": "Hi William,\n\nI came across your profile and was impressed by your background. We are currently looking for a Staff AI Engineer to lead our new multi-agent systems team.\n\nWe specifically need someone with deep expertise in LangGraph, deterministic routing, and human-in-the-loop systems. Do you have any recent projects or architecture demos that showcase these skills? We'd love to chat if you're open to new opportunities.\n\nBest,\nSarah Jenkins\nAcme Corp"
+  },
+  {
+    "uid": "1004",
+    "subject": "Contract gig: Integrating LLMs with Personal Data",
+    "sender": "David Chen <david.chen@startup.io>",
+    "date": "Tue, 02 Jun 2026 14:00:00 -0400",
+    "body": "Hey William,\n\nA mutual connection mentioned you were building some cool stuff with local agents. We are trying to build an agent that can reason over a user's local markdown files (like an Obsidian vault) without compromising privacy.\n\nWe are struggling with how to route requests and keep the LLM from hallucinating files. Have you built anything similar? If so, what was your approach to the architecture?\n\nLet me know if you're available for a consulting call this week.\n\nCheers,\nDavid"
+  }
+]
