@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus | Master To-Do List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --surface-color: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-primary: #818cf8;
+            --accent-secondary: #c084fc;
+            --success: #4ade80;
+            --warning: #fbbf24;
+            --font-main: 'Inter', sans-serif;
+            --font-display: 'Outfit', sans-serif;
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(129, 140, 248, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(192, 132, 252, 0.05) 0%, transparent 50%);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 3rem;
+            text-align: left;
+            position: relative;
+        }
+
+        .meta-bar {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: rgba(129, 140, 248, 0.1);
+            border: 1px solid rgba(129, 140, 248, 0.2);
+            color: var(--accent-primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .update-info {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .callout {
+            background: rgba(251, 191, 36, 0.05);
+            border-left: 4px solid var(--warning);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .callout strong {
+            color: var(--warning);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        section {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform var(--transition-speed), border-color var(--transition-speed);
+        }
+
+        section:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 24px;
+            background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary));
+            border-radius: 4px;
+        }
+
+        .task-list {
+            list-style: none;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: padding-left var(--transition-speed);
+        }
+
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        .task-item:hover {
+            padding-left: 0.5rem;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent-primary);
+            border-radius: 6px;
+            margin-top: 4px;
+            flex-shrink: 0;
+            cursor: pointer;
+            position: relative;
+            transition: background var(--transition-speed);
+        }
+
+        .checkbox.checked {
+            background: var(--accent-primary);
+        }
+
+        .checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 12px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .note-link {
+            color: var(--accent-primary);
+            font-weight: 500;
+            text-decoration: none;
+            padding: 2px 6px;
+            background: rgba(129, 140, 248, 0.1);
+            border-radius: 4px;
+            font-size: 0.95rem;
+            transition: background var(--transition-speed), color var(--transition-speed);
+        }
+
+        .note-link:hover {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-category {
+            margin-top: 1.5rem;
+        }
+
+        .project-category h3 {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .project-card strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .project-card p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .trophy-case {
+            border-color: rgba(74, 222, 128, 0.2);
+            background: rgba(74, 222, 128, 0.02);
+        }
+
+        .trophy-case h2 {
+            color: var(--success);
+        }
+
+        .trophy-case h2::before {
+            background: var(--success);
+        }
+
+        .completed-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+        }
+
+        .date-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--success);
+            background: rgba(74, 222, 128, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            height: fit-content;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 1rem; }
+            h1 { font-size: 2rem; }
+            section { padding: 1.5rem; }
+        }
+
+        /* Micro-animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        section:nth-child(1) { animation-delay: 0.1s; }
+        section:nth-child(2) { animation-delay: 0.2s; }
+        section:nth-child(3) { animation-delay: 0.3s; }
+        section:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="meta-bar">
+                <span class="tag">Overview</span>
+                <span class="tag">PKM</span>
+                <span class="tag">Current Tasks</span>
+            </div>
+            <h1>Master To-Do List</h1>
+            <p class="update-info">Nexus Operational Center • Last updated: 2026-05-13</p>
+        </header>
+
+        <div class="callout">
+            <strong>For Humans & Agents</strong>
+            This is the master task list. New Project - and Protocol - notes should be registered here when created.
+        </div>
+
+        <section>
+            <h2>Daily Protocols</h2>
+            <ul class="task-list">
+                <li class="task-item">
+                    <div class="checkbox"></div>
+                    <span class="note-link">Protocol - Daily Operational Rhythm</span>
+                </li>
+                <li class="task-item">
+                    <div class="checkbox"></div>
+                    <span>Review <span class="note-link">Goals</span></span>
+                </li>
+                <li class="task-item">
+                    <div class="checkbox"></div>
+                    <span>Review <span class="note-link">Current Learning</span></span>
+                </li>
+                <li class="task-item">
+                    <div class="checkbox"></div>
+                    <span>Log <span class="note-link">Cognitive Engineering Log</span> (CBT/ACT/ERP Reps)</span>
+                </li>
+                <li class="task-item">
+                    <div class="checkbox"></div>
+                    <span><span class="note-link">Protocol - CBT vs ACT Quick Reference</span> — Practice change vs acceptance.</span>
+                </li>
+                <li class="task-item">
+                    <div class="checkbox"></div>
+                    <span class="note-link">Protocol - Nightly System Shutdown</span>
+                </li>
+                <li class="task-item">
+                    <div class="checkbox"></div>
+                    <span class="note-link">Protocol - Reduce Phone Use</span> — Screen time & curfews.
+                </li>
+                <li class="task-item">
+                    <div class="checkbox"></div>
+                    <span>Log <span class="note-link">Journal</span></span>
+                </li>
+                <li class="task-item">
+                    <div class="checkbox"></div>
+                    <span>Log <span class="note-link">Memories</span> (Events, Wins)</span>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>One-Off Tasks</h2>
+            <ul class="task-list">
+                <li class="task-item">
+                    <span>Migrate remaining knowledge items from Chrome, Google Drive, and Archives.</span>
+                </li>
+                <li class="task-item">
+                    <span>Schedule <strong>Physical Therapy</strong> (Referral from Apr 8 visit).</span>
+                </li>
+                <li class="task-item">
+                    <span>Flesh out side project ideas for temporary revenue (Agentic workflows).</span>
+                </li>
+                <li class="task-item">
+                    <span>Connect with as many people as possible; remember Len Gnade.</span>
+                </li>
+                <li class="task-item">
+                    <span>Sign up for <strong>RAM Connect</strong> (Fordham Alumni Mentoring).</span>
+                </li>
+                <li class="task-item">
+                    <span>Setup <code>tools/read_email.py</code> with Gmail App Password.</span>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Active Projects</h2>
+            
+            <div class="project-category">
+                <h3>Career</h3>
+                <div class="project-card">
+                    <strong><span class="note-link">Get A Fucking Job</span></strong>
+                    <p>Job Hunt War Room. Includes Loom Demo and Portfolio Site.</p>
+                </div>
+                <div class="project-card">
+                    <strong><span class="note-link">AI Agents In LangGraph</span></strong>
+                    <p>Step-by-step syllabus and Agentic POC.</p>
+                </div>
+            </div>
+
+            <div class="project-category">
+                <h3>Nexus</h3>
+                <div class="project-card">
+                    <strong><span class="note-link">Nexus Agentic Engine</span></strong>
+                    <p>Master roadmap for LangGraph agent suite.</p>
+                </div>
+                <div class="project-card">
+                    <strong><span class="note-link">Agentic Medical Data Architecture</span></strong>
+                    <p>Automating medical record synthesis.</p>
+                </div>
+            </div>
+
+            <div class="project-category">
+                <h3>Home & Car</h3>
+                <div class="project-grid">
+                    <div class="project-card">
+                        <strong>Upstairs Flooring</strong>
+                        <p>Complete renovation of floors and stairs.</p>
+                    </div>
+                    <div class="project-card">
+                        <strong>Pilot SRS Codes</strong>
+                        <p>Troubleshooting airbag system codes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Recurring Protocols</h2>
+            <div class="project-category">
+                <h3>Weekly</h3>
+                <ul class="task-list">
+                    <li class="task-item"><div class="checkbox"></div> <span class="note-link">Brain Maintenance</span></li>
+                    <li class="task-item"><div class="checkbox"></div> <span class="note-link">Career Maintenance</span></li>
+                    <li class="task-item"><div class="checkbox"></div> <span>Computer Backup (Batch)</span></li>
+                    <li class="task-item"><div class="checkbox"></div> <span>Pick one social rep venue</span></li>
+                </ul>
+            </div>
+            <div class="project-category">
+                <h3>Monthly</h3>
+                <ul class="task-list">
+                    <li class="task-item"><div class="checkbox"></div> <span>Hard Drive Backup</span></li>
+                    <li class="task-item"><div class="checkbox"></div> <span>Cultivate Skill Requirements</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="trophy-case">
+            <h2>The Trophy Case</h2>
+            <div class="completed-item">
+                <span class="date-badge">2026-05-08</span>
+                <div>
+                    <strong><span class="note-link">Project - Vault Reader Agent</span></strong>
+                    <p>Local, privacy-first Agentic Vault Reader navigating filesystem via LangGraph.</p>
+                </div>
+            </div>
+            <div class="completed-item">
+                <span class="date-badge">2026-04-28</span>
+                <div>
+                    <strong><span class="note-link">Project - Public Release Strategy</span></strong>
+                    <p>Sanitizing and framing for professional "Human-First" GitHub release.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

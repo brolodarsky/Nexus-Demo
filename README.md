@@ -3,6 +3,9 @@
 ## Overview
 This repository contains a demonstration of the Nexus Agentic Engine, fulfilling the requirements for the take-home interview project. It features a system of three specialized agents that collaborate to route user requests, fetch live data, and reason over domain-specific contexts.
 
+## The Mock Vault
+This repository includes a `mock_vault` directory. This is a realistic, but entirely sanitized, mock environment of my real Personal Knowledge Management (PKM) system. It is used to demonstrate the agentic engine's ability to navigate and reason over complex, interconnected personal data structures without exposing any real sensitive information (PII, financial data, or intimate journals). You can use this vault to safely test the engine's retrieval and reasoning capabilities.
+
 ## Setup Instructions
 
 1. **Clone the repository**

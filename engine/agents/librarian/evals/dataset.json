@@ -2,11 +2,11 @@
   {
     "question": "What is the Sniper Protocol?",
     "expected_answer": "Identify key people (EM/Founder/PI), send a tailored narrative bridging Agentic experience to their challenges, and provide proof of work (deployed projects).",
-    "source_file": "mock_vault/Career Strategy/Job Hunt War Room.md"
+    "source_file": "mock_vault/3. Operations & Wealth/3.1. Career Strategy & Revenue/Job Hunt War Room.md"
   },
   {
     "question": "What is called a \"major key\" in the objectives section of the agentic engine project?",
     "expected_answer": "Human-In-The-Loop.",
-    "source_file": "mock_vault/Projects/Project - Nexus Agentic Engine.md"
+    "source_file": "mock_vault/6. Forge/6.1. Projects/6.1.2. Agentic R&D/Project - Nexus Agentic Engine/Project - Nexus Agentic Engine.md"
   }
 ]
