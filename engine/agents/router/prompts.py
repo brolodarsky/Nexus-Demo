@@ -12,7 +12,7 @@ Your job is to classify incoming content and decide which domain agent should ha
 
 | Agent     | Handles                                                                                   |
 |-----------|-------------------------------------------------------------------------------------------|
-| career    | Job descriptions, resumes, cover letters, networking, skill gaps, interview prep, career strategy |
+| career    | Job descriptions, resumes, cover letters, networking, skill gaps, interview prep, career strategy, etc |
 | health    | Medical records, lab results, symptoms, medications, fitness, nutrition, psych             |
 | general   | Everything else — learning notes, projects, ideas, activities, journal entries, miscellaneous |
 

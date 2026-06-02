@@ -71,20 +71,24 @@ def classify_content(state: RouterState) -> dict:
     raw_content = state["raw_content"]
     messages = list(state.get("messages", []))
     
+    state_updates = []
     if not messages:
         router_tracer.agent_start(f"Classifying: {raw_content[:80]}")
-        messages = [
-            SystemMessage(content=ROUTER_SYSTEM_PROMPT),
-            HumanMessage(content=raw_content),
-        ]
+        sys_msg = SystemMessage(content=ROUTER_SYSTEM_PROMPT)
+        hum_msg = HumanMessage(content=raw_content)
+        messages = [sys_msg, hum_msg]
+        state_updates.extend(messages)
 
     # If we just executed a tool, remind the LLM to output ONLY JSON
     if len(messages) > 0 and hasattr(messages[-1], "type") and messages[-1].type == "tool":
         router_tracer.info("Tool data received, re-prompting LLM for classification JSON...")
-        messages.append(SystemMessage(content="You have retrieved the necessary data. Now, you MUST return ONLY a valid JSON object containing your final routing decision (domain, summary, confidence, reasoning). No conversational text."))
+        reminder = SystemMessage(content="You have retrieved the necessary data. Now, you MUST return ONLY a valid JSON object containing your final routing decision (domain, summary, confidence, reasoning). No conversational text.")
+        messages.append(reminder)
+        state_updates.append(reminder)
 
     router_tracer.llm_call()
     response = llm_with_tools.invoke(messages)
+    state_updates.append(response)
 
     domain = None
     summary = None
@@ -125,7 +129,7 @@ def classify_content(state: RouterState) -> dict:
             router_tracer.tool_call(tc.get("name", "unknown"), tc.get("args", {}))
 
     return {
-        "messages": [response],
+        "messages": state_updates,
         "domain": domain,
         "summary": summary,
         "confidence": confidence,
@@ -146,6 +150,7 @@ def route_after_classify(state: RouterState) -> Literal["tools", "career_agent",
     if domain == "career":
         return "career_agent"
     return "run_librarian_node"
+    
 def run_librarian_node(state: RouterState) -> dict:
     """
     Fallback for domains without a dedicated agent yet, or explicit general knowledge queries.

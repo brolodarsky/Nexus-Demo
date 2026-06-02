@@ -4,7 +4,7 @@
     "subject": "Update on your interview - Round 1 passed!",
     "sender": "Bobby Trickett <bobby.trickett@example.com>",
     "date": "Mon, 01 Jun 2026 09:15:00 -0400",
-    "body": "Hi William,\n\nI'm pleased to inform you that you passed Round 1 of the interview process! Your systems design approach was exactly what we were looking for.\n\nFor the next step, we need you to submit the take-home project (the Nexus Agentic Engine Demo) by end of day Friday. Please make sure the code is well documented and the agent routing is working correctly.\n\nLet me know if you have any questions.\n\nBest,\nBobby"
+    "body": "Hi Will,\nCongrats on moving on to Round 2 of interviews. We elected for the take home in Round 2 as the team is traveling.\n\nThe project: Build a system with three agents that work together around the use case that most excites you. Use whichever model and best practices you would like.\n Beyond getting it working, we want to see two things:\n  1. How you'd evaluate it\n  2. How you'd improve it \n\nThere's no single right answer. We're more interested in how you think about agent quality than in a perfect implementation.\n\nWhat to send us: A GitHub repo with your code and a short README explaining your design, your evaluation approach, and what you'd do differently with more time.\n\nTime: As much time as you believe necessary. We expect to evaluate early next week.\n\nLooking forward to seeing what you build. Feel free to text me if you have any questions\nBest,\n\n--\nBobby Trickett"
   },
   {
     "uid": "1002",
@@ -26,5 +26,19 @@
     "sender": "David Chen <david.chen@startup.io>",
     "date": "Tue, 02 Jun 2026 14:00:00 -0400",
     "body": "Hey William,\n\nA mutual connection mentioned you were building some cool stuff with local agents. We are trying to build an agent that can reason over a user's local markdown files (like an Obsidian vault) without compromising privacy.\n\nWe are struggling with how to route requests and keep the LLM from hallucinating files. Have you built anything similar? If so, what was your approach to the architecture?\n\nLet me know if you're available for a consulting call this week.\n\nCheers,\nDavid"
+  },
+  {
+    "uid": "1005",
+    "subject": "Lab Results: Annual Panel",
+    "sender": "Dr. Aris Thorne <results@healthclinic.org>",
+    "date": "Wed, 03 Jun 2026 08:00:00 -0400",
+    "body": "Hello William,\n\nYour recent blood panel results are back. Everything looks mostly normal, but your Vitamin D levels are a bit low (22 ng/mL). I recommend starting a daily supplement of 2000 IU and getting some more sun exposure.\n\nPlease log this in your personal health tracker.\n\nBest,\nDr. Thorne"
+  },
+  {
+    "uid": "1006",
+    "subject": "Flight Confirmation: NYC to SFO",
+    "sender": "SkyHigh Airlines <reservations@skyhigh.com>",
+    "date": "Wed, 03 Jun 2026 10:45:00 -0400",
+    "body": "Thank you for booking with SkyHigh Airlines!\n\nYour flight from New York (JFK) to San Francisco (SFO) is confirmed for June 15, 2026. \nFlight Number: SH442\nDeparture: 08:30 AM EST\nSeat: 12A\n\nSafe travels!"
   }
 ]
