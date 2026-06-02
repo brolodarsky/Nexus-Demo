@@ -3,6 +3,32 @@
 ## Overview
 This repository contains a demonstration of the Nexus Agentic Engine, fulfilling the requirements for the take-home interview project. It features a system of three specialized agents that collaborate to route user requests, fetch live data, and reason over domain-specific contexts.
 
+## Setup Instructions
+
+1. **Clone the repository**
+2. **Create a virtual environment and install dependencies**:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   pip install -r requirements.txt
+   ```
+3. **Configure Environment Variables**:
+   Create a `.env` file in the root directory of the project and populate it with the following required and optional variables:
+
+   ```env
+   # Required
+   OPENAI_API_KEY=your_openai_api_key
+   TELEGRAM_BOT_TOKEN=your_telegram_bot_token  # If running the Telegram bot
+   EMAIL_ADDRESS=your_email_address            # For IMAP email agent
+   
+   # Optional (Defaults provided)
+   ALLOWED_USER_IDS=                           # Restrict Telegram bot access (comma separated)
+   VAULT_PATH=mock_vault                       # Path to your personal data vault
+   IMAP_SERVER=imap.gmail.com                  # IMAP server address
+   IMAP_PORT=993                               # IMAP server port
+   IMAP_FOLDER=Jobs                            # Email folder to monitor
+   ```
+
 ## Design Architecture
 The system is built around a **Three-Agent Pipeline** using LangGraph, demonstrating cross-domain orchestration and the compiled subgraph pattern:
 
