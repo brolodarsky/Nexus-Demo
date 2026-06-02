@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.env
+hitl.db
+logs/
+.venv/
+venv/
+engine/agents/librarian/evals/results/
