@@ -33,6 +33,11 @@ This repository includes a `mock_vault` directory. This is a realistic, but enti
    IMAP_SERVER=imap.gmail.com                  # IMAP server address
    IMAP_PORT=993                               # IMAP server port
    IMAP_FOLDER=Jobs                            # Email folder to monitor
+
+   # LangSmith Tracing (Optional, for observability)
+   LANGCHAIN_TRACING_V2="true"
+   LANGCHAIN_API_KEY=your_langsmith_api_key
+   LANGCHAIN_PROJECT=Nexus-Demo
    ```
 
 ## Design Architecture
